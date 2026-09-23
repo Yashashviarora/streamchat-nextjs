@@ -17,6 +17,7 @@ export default function Home() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem('askdocs-messages');
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time load from localStorage
       if (saved) setMessages(JSON.parse(saved));
     } catch {}
   }, []);
