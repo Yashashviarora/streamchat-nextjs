@@ -1,6 +1,17 @@
-# AskDocs
+# StreamChat — Streaming AI Chat
 
-A minimal chat UI that streams answers from an LLM, built with Next.js (App Router), TypeScript, and Tailwind CSS. Messages stream token-by-token from the model into the browser, with a chat mode and a summarise mode.
+StreamChat is a minimal chat app that streams answers from an LLM token by token. It is built with the Next.js App Router, TypeScript and Tailwind CSS, talks to any OpenAI-compatible API through the `openai` SDK, and runs the chat endpoint on the Vercel Edge runtime. Responses can be stopped mid-stream, assistant replies are rendered as Markdown, and the conversation is kept in `localStorage` so it survives a refresh.
+
+**Live:** https://streamchat-nextjs.vercel.app
+
+## Tech stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- OpenAI-compatible API (Groq by default, via the `openai` SDK)
+- GitHub Actions CI (lint, type-check, build)
+- Vercel
 
 ## Features
 
@@ -14,11 +25,23 @@ A minimal chat UI that streams answers from an LLM, built with Next.js (App Rout
 
 ## Local setup
 
+Requires Node.js 20+.
+
 ```bash
+git clone https://github.com/Yashashviarora/streamchat-nextjs.git
+cd streamchat-nextjs
 npm install
 ```
 
-Create `.env.local` in the project root:
+Create `.env.local` in the project root with the required environment variables:
+
+| Variable | Required | Description |
+|---|---|---|
+| `LLM_API_KEY` | yes | API key for your LLM provider |
+| `LLM_BASE_URL` | yes | Base URL of an OpenAI-compatible API |
+| `LLM_MODEL` | yes | Model name to send requests to |
+
+Example (Groq):
 
 ```
 LLM_API_KEY=your_key_here
@@ -26,13 +49,23 @@ LLM_BASE_URL=https://api.groq.com/openai/v1
 LLM_MODEL=openai/gpt-oss-20b
 ```
 
-Then:
+Then start the dev server:
 
 ```bash
 npm run dev
 ```
 
 Open http://localhost:3000.
+
+### Checks
+
+The same checks CI runs on every push:
+
+```bash
+npm run lint
+npx next typegen && npx tsc --noEmit
+npm run build
+```
 
 ## Switching providers
 
@@ -57,4 +90,4 @@ Set `LLM_API_KEY` to the matching provider's key and restart the dev server.
 - **Auth** — user accounts so conversations are private per user
 - **DB-backed history** — store chats in a database instead of localStorage
 - **Rate limiting** — Redis-based per-user limits to protect the API key from abuse
-- **RAG** — a vector store over uploaded documents so answers can cite real sources ("ask your docs" for real)
+- **RAG** — a vector store over uploaded documents so answers can cite real sources

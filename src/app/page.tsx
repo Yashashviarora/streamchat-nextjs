@@ -90,7 +90,7 @@ export default function Home() {
   return (
     <main className="mx-auto flex h-dvh w-full max-w-2xl flex-col px-4 py-3 sm:px-6">
       <header className="flex items-center border-b border-gray-200 pb-3 dark:border-gray-800">
-        <h1 className="text-base font-semibold sm:text-lg">AskDocs</h1>
+        <h1 className="text-base font-semibold sm:text-lg">StreamChat</h1>
       </header>
 
       <div className="flex-1 space-y-3 overflow-y-auto py-4">
